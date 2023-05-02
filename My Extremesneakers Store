@@ -1,0 +1,39 @@
+-- Creating my extremesneakers store database
+
+CREATE TABLE extremesneakers (Product_id INTEGER PRIMARY KEY, Brand TEXT,Color TEXT,Department TEXT,Price INTEGER);
+
+INSERT INTO extremesneakers VALUES 
+(1001,'nike','white','wens', 50),
+(1002,'adidas','black','unisex',150),
+(1003,'new balance','white','womens',80),
+(1004,'puma','pink','womens',60),
+(1005,'sketchers','brown','mens',40),
+(1006,'vans','creamwhite','kids',75),
+(1007,'fila','purple','womens',120),
+(1008,'converse','red','mens',140),
+(1009,'brooks','blue','mens',95),
+(1010,'under armour','white','unisex',130),
+(1011,'reebok','grey','kids',45),
+(1012,'nike','green','unisex',110),
+(1013,'adidas','biege','women',160),
+(1014,'puma','yellow','kids',135),
+(1015,'vans','burgundy','womens',180);
+
+--Display my extremesneakers store order by price
+
+SELECT * 
+FROM extremesneakers
+ORDER BY price asc;
+
+--Finding out the average price of sneakers by color
+
+SELECT AVG(price) "avg item price"
+FROM extremesneakers
+where color='white';
+
+-- Most common sneakers by department
+
+SELECT Brand,Color,Department
+FROM extremesneakers
+ORDER BY Department
+limit 5;
