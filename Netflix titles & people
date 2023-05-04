@@ -1,0 +1,61 @@
+# The following syntax was written in PostgreSQL, 2 tables are involved:
+
+# Table 1 :"Victorbeza/bezacode"."netflix_titles_info"
+#Columns/ attributes: show_id, type, title, country,date_added, release_year, rating,duration, lised_in, description
+
+# Table 2 :"Victorbeza/bezacode"."netflix_people"
+#Columns/ attributes: show_id, director, cast
+
+
+
+#1. How many movie titles are there in the database? (movies only, not tv shows) 
+
+select count(*) 
+FROM "Victorbeza/bezacode"."netflix_titles_info"
+WHERE type='Movie';
+#note the use of single quotes in WHERE type='Movie'
+#In PostgreSQL, you have to use single quotes to select strings,
+#because double quotes are part of the syntax for the FROM statement.
+
+#2. When was the most recent batch of tv shows and/or movies added to the database? 
+
+select max(date(date_added))
+FROM "Victorbeza/bezacode"."netflix_titles_info";
+
+#3. List all the movies and tv shows in alphabetical order.
+
+select title
+FROM "Victorbeza/bezacode"."netflix_titles_info"
+ORDER BY title asc;
+
+#4. Who was the Director for the movie Bright Star? 
+
+select 
+director
+FROM "Victorbeza/bezacode"."netflix_titles_info" titles
+LEFT JOIN  "Victorbeza/bezacode"."netflix_people" people
+ON titles.show_id=people.show_id
+where titles.title='Bright Star'
+
+#5. What is the oldest movie in the database and what year was it made? 
+
+select title, release_year
+FROM "Victorbeza/bezacode"."netflix_titles_info"
+WHERE type='Movie'
+ORDER BY release_year asc
+LIMIT 1;
+# NOTE: The above SQL gives you a correct answer,
+# but there are actually 2 movies that came out that year! 
+# You can see the second one by changing
+# LIMIT 1 to LIMIT 2. 
+# Or, you can use a "subquery" like this to see all the oldest movies
+# without assuming that there was only 1 that year: 
+
+SELECT title, release_year 
+FROM "Victorbeza/bezacode"."netflix_titles_info"
+WHERE type = 'Movie'
+AND release_year <= 
+(SELECT MIN(release_year) 
+FROM "Victorbeza/bezacode"."netflix_titles_info"
+WHERE type = 'Movie'); 
+
