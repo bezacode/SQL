@@ -55,3 +55,28 @@ ON FEB.orderid=cust.order_id
 WHERE Feb.Quantity>2
 AND length(orderid) = 6 
 AND orderid <> 'Order ID'
+
+#8 Findout which orders were made from in February from the 13th up to the 18Th of 2019. 
+SELECT orderdate
+FROM BIT_DB.FebSales
+WHERE orderdate between '02/13/19 00:00' AND '02/18/19 00:00'
+
+#9 Identify the location where orders took place on 18th of February,2019 at around 01:35. 
+SELECT location
+FROM BIT_DB.FebSales 
+WHERE orderdate = '02/18/19 01:35'
+
+#10 How many total orders were sold on 18th of February, 2019 regardless of time in minutes & seconds. 
+SELECT sum(quantity)
+FROM BIT_DB.FebSales 
+WHERE orderdate like '02/18/19%'
+
+#11 From the sales that were made in the month of February, Find the name of the product( without duplication) that is associated with a name in it like " Batteries". 
+SELECT distinct Product
+FROM BIT_DB.FebSales
+WHERE Product like '%Batteries%'
+
+#12.From the sales that were made in the month of February, Find the name of the product( without duplication) and price ,that contains a value in price of 99 cents in it after the dollar" 
+SELECT distinct Product, Price
+FROM BIT_DB.FebSales 
+WHERE Price like '%.99'
